@@ -12,4 +12,9 @@ spring:
     password: 123456
     url: jdbc:mysql://localhost:3306/test1?serverTimezone=CTT&useUnicode=true&characterEncoding=utf8
     driverClassName: com.mysql.jdbc.Driver
-
+pageHelper:
+  helperDialect: mysql
+  reasonable: true #开启优化，<1页返回第一页
+  supportMethodsArguments: true #是否支持接口参数来传递分页参数，默认false
+  pageSizeZero: false #pageSize=0 返回所有
+  params: count=countSql

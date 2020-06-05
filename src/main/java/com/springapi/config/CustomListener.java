@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.servlet.ServletRequestEvent;
 import javax.servlet.ServletRequestListener;
 import javax.servlet.annotation.WebListener;
+import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.lang.reflect.Array;
@@ -24,26 +25,19 @@ public class CustomListener implements ServletRequestListener {
     }
 
     public void requestInitialized(ServletRequestEvent sre) {
-        StringBuffer data = new StringBuffer();
-        String line = null;
-        BufferedReader reader = null;
-        try {
+        HttpServletRequest httpServletRequest = (HttpServletRequest) sre.getServletRequest();
+        String tenantId = httpServletRequest.getHeader("tenantIds");
 
-            reader = sre.getServletRequest().getReader();
-            while (null != (line = reader.readLine()))
-                data.append(line);
-            System.out.println(data);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        JSONObject jsonObject = JSONObject.parseObject(String.valueOf(data));
+        JSONArray jsonArray = JSONArray.parseArray(tenantId);
         Map<String, List<String>> map = new HashMap<>();
         List<String> tenantIds = new ArrayList<>();
-
-        for(Object tenantId : JSONArray.parseArray(jsonObject.get("tenantId").toString())) {
-            System.out.println(tenantId);
-            tenantIds.add(tenantId.toString());
+        if(jsonArray != null) {
+            for(Object tenantIdItem : jsonArray) {
+                System.out.println(tenantIdItem);
+                tenantIds.add(tenantIdItem.toString());
+            }
+        }else {
+            tenantIds.add(null);
         }
         map.put("tenantIds",tenantIds);
         customContext.setTenantIdMap(map);

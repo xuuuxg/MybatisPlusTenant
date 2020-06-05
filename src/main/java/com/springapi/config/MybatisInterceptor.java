@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.tenant.TenantHandler;
 import com.baomidou.mybatisplus.extension.plugins.tenant.TenantSqlParser;
 import net.sf.jsqlparser.expression.Expression;
-import net.sf.jsqlparser.expression.LongValue;
 import net.sf.jsqlparser.expression.StringValue;
 import net.sf.jsqlparser.expression.operators.relational.ExpressionList;
 import net.sf.jsqlparser.expression.operators.relational.InExpression;
@@ -32,12 +31,17 @@ public class MybatisInterceptor {
 
             @Override
             public Expression getTenantId(boolean where) {
+
+                boolean multipleTenantIds = false;   // 用于判断单个租户还是多个租户
                 /**
                  * where 参数 在官网介绍为   3.2.0版本后添加
                  * 用于区分多租户ID
                  */
-                final boolean multipleTenantIds = false;   // 用于判断单个租户还是多个租户
-                if(where && multipleTenantIds) {
+                if(context.getTenantIdMap().get("tenantIds").size() > 1) {
+                    multipleTenantIds = true;
+                }
+
+                if(multipleTenantIds) {
                     return multipleTenantIdCondition();
                 }
                 return new StringValue(context.getTenantIdMap().get("tenantIds").get(0));
