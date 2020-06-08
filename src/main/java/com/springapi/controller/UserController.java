@@ -27,10 +27,12 @@ public class UserController {
         return ResponseEntity.ok().body(userService.findUsersById(id));
     }
 
-    @GetMapping("/userList")
+    @GetMapping("/userList/")
     @ApiOperation(value = "按照条件查询User", notes = "获取User")
-    public ResponseEntity getUserList(Page<UserEntity> page,UserEntity userEntity) {
-        return ResponseEntity.ok().body(userService.findAll(page,userEntity));
+    public ResponseEntity getUserList(@RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+                                      @RequestParam("pageNum") int pageNum,
+                                      UserEntity userEntity) {
+        return ResponseEntity.ok().body(userService.findAll(pageNum, pageSize, userEntity));
     }
 
 

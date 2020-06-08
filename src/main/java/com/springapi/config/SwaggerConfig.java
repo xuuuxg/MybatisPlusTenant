@@ -19,15 +19,14 @@ import java.util.List;
 
 @EnableSwagger2
 @Configuration
-@EnableWebMvc
-public class SwaggerConfig implements WebMvcConfigurer {
+public class SwaggerConfig implements WebMvcConfigurer  {
 
 
     @Bean
     public Docket customDocket() {
         ParameterBuilder ticketPar = new ParameterBuilder();
         List<Parameter> pars = new ArrayList<Parameter>();
-        ticketPar.name("tenantId").description("租户ID 为数组[1,2,3,4]")//name表示名称，description表示描述
+        ticketPar.name("tenantIds").description("租户ID 为数组[1,2,3,4]")//name表示名称，description表示描述
                 .modelRef(new ModelRef("string")).parameterType("header")
                 .required(false).defaultValue("[1]").build();//required表示是否必填，defaultvalue表示默认值
         pars.add(ticketPar.build());//添加完此处一定要把下边的带***的也加上否则不生效
@@ -40,12 +39,12 @@ public class SwaggerConfig implements WebMvcConfigurer {
                 .globalOperationParameters(pars);//************把消息头添加;
     }
 
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("swagger-ui.html")
-                .addResourceLocations("classpath:/META-INF/resources/");
-        registry.addResourceHandler("/webjars/**")
-                .addResourceLocations("classpath:/META-INF/resources/webjars/");
+        @Override
+        public void addResourceHandlers(ResourceHandlerRegistry registry) {
+            registry.addResourceHandler("swagger-ui.html")
+                    .addResourceLocations("classpath:/META-INF/resources/");
+            registry.addResourceHandler("/webjars/**")
+                    .addResourceLocations("classpath:/META-INF/resources/webjars/");
 
     }
 }

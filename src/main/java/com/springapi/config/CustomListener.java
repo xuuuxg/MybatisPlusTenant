@@ -1,17 +1,12 @@
 package com.springapi.config;
 
 import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.fasterxml.jackson.core.JsonParser;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.ServletRequestEvent;
 import javax.servlet.ServletRequestListener;
 import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpServletRequest;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.*;
 
 @WebListener

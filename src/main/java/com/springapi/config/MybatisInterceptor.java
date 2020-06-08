@@ -59,7 +59,7 @@ public class MybatisInterceptor {
 
             // 单租户的id返回
             private Expression singleTenantIdCondition() {
-                return  new StringValue(context.getTenantIdMap().get("tenantId").get(0));
+                return  new StringValue(context.getTenantIdMap().get("tenantIds").get(0));
             }
 
             // 多租户的id返回
@@ -70,7 +70,7 @@ public class MybatisInterceptor {
                 // 定义一个List
                 final List<Expression> inValues = new ArrayList<>();
                 // 将租户ID放入List
-                for(String tenantId : context.getTenantIdMap().get("tenantId")) {
+                for(String tenantId : context.getTenantIdMap().get("tenantIds")) {
                     inValues.add(new StringValue(tenantId));
                 }
                 // 将List放入ExpressionList对象
