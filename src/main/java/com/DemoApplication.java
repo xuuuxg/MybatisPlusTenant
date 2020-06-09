@@ -2,6 +2,7 @@ package com;
 
 import com.springapi.config.MybatisInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
